@@ -11,7 +11,6 @@ public class FinalMineralCard extends FinalCard
     String name;
     double hardness,specific_gravity;
     double crystal_abundance, economic_value, cleavage;
-    ImageIcon image;
 
     public FinalMineralCard()
     //basic constructor, creates an essentially worthless card (all lowest values)
@@ -25,10 +24,9 @@ public class FinalMineralCard extends FinalCard
         // in string form crystal abundance is referred to as rarity
         economic_value = 0;
         // in string form economic value is referred to as price
-        image = null;
     }
 
-    public FinalMineralCard(String newname, double input_h, double input_sg, String cv, String ca, String ev, ImageIcon img)
+    public FinalMineralCard(String newname, double input_h, double input_sg, String cv, String ca, String ev)
     //constructor: accepts numbers for hardness and specific gravity and accepts strings for cleavage, abundance, and econ
     {
         name = newname;
@@ -43,7 +41,6 @@ public class FinalMineralCard extends FinalCard
         cleavage = cleaveToCleavage(cv);
         crystal_abundance = rarityToAbundance(ca);
         economic_value = priceToEconomicValue(ev);
-        image = transformPic(img);
     }
 
     public void showStats()
@@ -356,14 +353,9 @@ public class FinalMineralCard extends FinalCard
         return cleavage;
     }
 
-    public ImageIcon getImage()
-    {
-        return image;
-    }
-
     public String getNewCurrentCategory(String current_category)
     //returns the current_category
-    //does nothing because Mineral Cards do not
+    //does nothing because Mineral Cards do not change category
     {
         return current_category;
     }

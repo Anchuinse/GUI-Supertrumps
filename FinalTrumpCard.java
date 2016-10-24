@@ -8,17 +8,15 @@ public class FinalTrumpCard extends FinalCard
         //the template for all trump cards
 {
     String name, category;
-    ImageIcon image;
 
     public FinalTrumpCard()
     //basic constructor, creates an unnamed card that allows players to choose the playable trump
     {
         name = "Unnamed_Trump";
         category = "your choice";
-        image = null;
     }
 
-    public FinalTrumpCard(String newname, String newcategory, ImageIcon img)
+    public FinalTrumpCard(String newname, String newcategory)
     //constructor: accepts a name and a trump that the card will turn the active trump too
     //will only accept hardness, specific gravity, crystal abundance, economic value, cleavage or your choice for newcategory
     //prompts for a valid category/trump if given an invalid one
@@ -35,7 +33,6 @@ public class FinalTrumpCard extends FinalCard
             String validcategory = scanner.nextLine();
             this.changeCategory(validcategory);
         }
-        image = transformPic(img);
     }
 
     public void showStats()
@@ -89,11 +86,6 @@ public class FinalTrumpCard extends FinalCard
     //retrieves category the card will change the playable trump too
     {
         return category;
-    }
-
-    public ImageIcon getImage()
-    {
-        return image;
     }
 
     public String getNewCurrentCategory(String current_category)

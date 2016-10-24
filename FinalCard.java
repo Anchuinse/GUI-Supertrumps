@@ -18,11 +18,4 @@ public abstract class FinalCard{
     //allows for getCurrentValue() from MineralCard and TrumpCard to be used
 
     public abstract boolean checkIfPlayable(String current_category, double current_value);
-
-    public ImageIcon transformPic(ImageIcon i)
-    {
-        Image image = i.getImage();
-        Image new_image = image.getScaledInstance(150,200, Image.SCALE_SMOOTH);
-        return (new ImageIcon(new_image));
-    }
 }
