@@ -13,7 +13,8 @@ import static java.lang.Math.round;
 public class FinalGame extends JFrame implements ActionListener
 {
     int who_turn, winner_number, playernumber;
-    Icon last_card;
+    ImageIcon last_card = new ImageIcon("/Users/Matt/Desktop/Australian School/" +
+                                           "Programming Final/project_mineral_super_trumps_game-master/images/zzStock1.jpg");;
     String current_category;
     double current_value;
     ArrayList<FinalCard> Deck;
@@ -61,11 +62,11 @@ public class FinalGame extends JFrame implements ActionListener
     JButton gravity = new JButton("Specific Gravity");
     JButton cleavage = new JButton("Cleavage");
     JButton abundance = new JButton("Crystal Abundance");
+    Timer timer = new Timer(2000, this);
 
     public FinalGame()
     {
         super("Mineral Supertrumps");
-        last_card = null;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(0,0);
@@ -89,6 +90,8 @@ public class FinalGame extends JFrame implements ActionListener
         currents.add(messages);
         tophalf.setLayout(new GridLayout(1,2));
         tophalf.add(currents);
+        displayed_card.setIcon(specialTransformPic(last_card));
+        displayed_card.setPreferredSize(new Dimension(300,400));
         displayed_card.setHorizontalAlignment(SwingConstants.CENTER);
         tophalf.add(displayed_card);
 
@@ -102,7 +105,7 @@ public class FinalGame extends JFrame implements ActionListener
 
         player_name_form.setLayout(new FlowLayout());
 
-        hand_form.setLayout(new GridLayout(2,8));
+        hand_form.setLayout(new GridLayout(2,7));
         button_list.add(button1);
         button_list.add(button2);
         button_list.add(button3);
@@ -221,12 +224,12 @@ public class FinalGame extends JFrame implements ActionListener
         Deck.add(new FinalMineralCard("Topaz", 8, 3.6, "1 perfect", "ultratrace", "low"));
         Deck.add(new FinalMineralCard("Tourmaline", 7.5, 3.2, "2 poor", "trace", "moderate"));
         Deck.add(new FinalMineralCard("Zircon", 7.5, 4.7, "2 poor", "trace", "moderate"));
-        Deck.add(new FinalTrumpCard("The Gemmologist", "hardness"));
-        Deck.add(new FinalTrumpCard("The Geologist", "your choice"));
-        Deck.add(new FinalTrumpCard("The Geophysicist", "specific gravity"));
-        Deck.add(new FinalTrumpCard("The Miner", "economic value"));
-        Deck.add(new FinalTrumpCard("The Mineralogist", "cleavage"));
-        Deck.add(new FinalTrumpCard("The Petrologist", "crystal abundance"));
+        Deck.add(new FinalTrumpCard("TheGemmologist", "hardness"));
+        Deck.add(new FinalTrumpCard("TheGeologist", "your choice"));
+        Deck.add(new FinalTrumpCard("TheGeophysicist", "specific gravity"));
+        Deck.add(new FinalTrumpCard("TheMiner", "economic value"));
+        Deck.add(new FinalTrumpCard("TheMineralogist", "cleavage"));
+        Deck.add(new FinalTrumpCard("ThePetrologist", "crystal abundance"));
         return Deck;
     }
 
@@ -477,15 +480,23 @@ public class FinalGame extends JFrame implements ActionListener
         ArrayList<FinalCard> hand = playerlist[who_turn].getHand();
         for (int i=0; i < hand.size(); ++i)
         {
+            if (hand.get(i).checkIfPlayable(current_category, current_value) == false)
+            {
+                messages.setText("You can't play that card. It's " + current_category + " is too low.");
+                timer.start();
+            }
             if (hand.get(i).checkIfPlayable(current_category, current_value) == true && hand.get(i).getName() == string)
             {
-                if (hand.get(i).getName() == "The Geologist")
+                if (hand.get(i).getName() == "TheGeologist")
                 {
                     current_category = "hardness";
                     System.out.println("still gotta fix the geologist bullshit");
                 }
                 else { current_category = hand.get(i).getNewCurrentCategory(current_category);}
                 current_value = hand.get(i).getNewCurrentValue(current_category);
+                last_card = new ImageIcon("/Users/Matt/Desktop/Australian School/" +
+                        "Programming Final/project_mineral_super_trumps_game-master/images/"+hand.get(i)+".jpg");
+                displayCurrents();
                 validate();
                 repaint();
                 hand.remove(i);
@@ -530,6 +541,7 @@ public class FinalGame extends JFrame implements ActionListener
         checkForWin();
         checkFinish();
         ++who_turn;
+        messages.setText("Which card do you want to play? You can also pass.");
         if (who_turn >= playerlist.length) {
             who_turn = 0;
         }
@@ -565,6 +577,13 @@ public class FinalGame extends JFrame implements ActionListener
             }
         }
         messages.setText(string);
+    }
+
+    public ImageIcon specialTransformPic(ImageIcon i)
+    {
+        Image image = i.getImage();
+        Image new_image = image.getScaledInstance(240,400, Image.SCALE_SMOOTH);
+        return (new ImageIcon(new_image));
     }
 
     @Override
@@ -681,7 +700,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button1.getName());
-                    last_card = button1.getIcon();
                 }
             }
         }
@@ -694,7 +712,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button2.getName());
-                    last_card = button2.getIcon();
                 }
             }
         }
@@ -707,7 +724,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button3.getName());
-                    last_card = button3.getIcon();
                 }
             }
         }
@@ -720,7 +736,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button4.getName());
-                    last_card = button4.getIcon();
                 }
             }
         }
@@ -733,7 +748,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button5.getName());
-                    last_card = button5.getIcon();
                 }
             }
         }
@@ -746,7 +760,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button6.getName());
-                    last_card = button6.getIcon();
                 }
             }
         }
@@ -759,7 +772,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button7.getName());
-                    last_card = button7.getIcon();
                 }
             }
         }
@@ -772,7 +784,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button8.getName());
-                    last_card = button8.getIcon();
                 }
             }
         }
@@ -785,7 +796,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button9.getName());
-                    last_card = button9.getIcon();
                 }
             }
         }
@@ -798,7 +808,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button10.getName());
-                    last_card = button10.getIcon();
                 }
             }
         }
@@ -811,7 +820,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button11.getName());
-                    last_card = button11.getIcon();
                 }
             }
         }
@@ -824,7 +832,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button12.getName());
-                    last_card = button12.getIcon();
                 }
             }
         }
@@ -837,7 +844,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button13.getName());
-                    last_card = button13.getIcon();
                 }
             }
         }
@@ -850,7 +856,6 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button14.getName());
-                    last_card = button14.getIcon();
                 }
             }
         }
@@ -863,9 +868,14 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button15.getName());
-                    last_card = button15.getIcon();
                 }
             }
+        }
+
+        if (e.getSource() == timer)
+        {
+            messages.setText("Which card do you want to play? You can also pass.");
+            timer.stop();
         }
     }
 

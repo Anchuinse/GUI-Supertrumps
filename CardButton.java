@@ -8,10 +8,10 @@ public class CardButton extends JButton
 {
     String string;
     ImageIcon image = new ImageIcon("/Users/Matt/Desktop/Australian School/" +
-            "Programming Final/project_mineral_super_trumps_game-master/images/Apatite.jpg");
+            "Programming Final/project_mineral_super_trumps_game-master/images/"+string+".jpg");
     JPanel panel = new JPanel();
     JLabel label = new JLabel();
-    Dimension size = new Dimension(150,150);
+    Dimension size = new Dimension(120,180);
 
     public CardButton()
     {
@@ -19,7 +19,7 @@ public class CardButton extends JButton
         add(panel);
         panel.add(label);
         string = "unassigned";
-        image = null;
+        //image = null;
         //label.setIcon(image);
         validate();
         repaint();
@@ -49,6 +49,8 @@ public class CardButton extends JButton
     {
         panel.setPreferredSize(size);
         string = new_string;
+        image =  new ImageIcon("/Users/Matt/Desktop/Australian School/" +
+                "Programming Final/project_mineral_super_trumps_game-master/images/"+new_string+".jpg");
         //label.setPreferredSize(size);
         label.setIcon(transformPic(image));
         //label.setText(string);
@@ -59,7 +61,7 @@ public class CardButton extends JButton
     public ImageIcon transformPic(ImageIcon i)
     {
         Image image = i.getImage();
-        Image new_image = image.getScaledInstance(150,200, Image.SCALE_SMOOTH);
+        Image new_image = image.getScaledInstance(120,180, Image.SCALE_SMOOTH);
         return (new ImageIcon(new_image));
     }
 }
