@@ -13,6 +13,7 @@ import static java.lang.Math.round;
 public class FinalGame extends JFrame implements ActionListener
 {
     int who_turn, winner_number, playernumber;
+    Icon last_card;
     String current_category;
     double current_value;
     ArrayList<FinalCard> Deck;
@@ -64,6 +65,7 @@ public class FinalGame extends JFrame implements ActionListener
     public FinalGame()
     {
         super("Mineral Supertrumps");
+        last_card = null;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(0,0);
@@ -371,11 +373,18 @@ public class FinalGame extends JFrame implements ActionListener
         turn_player.setText("It is " + playerlist[who_turn].getName() + "'s turn.");
     }
 
+    public void displayCurrentCard()
+    {
+        displayed_card = new JLabel();
+        displayed_card.setIcon(last_card);
+    }
+
     public void displayCurrents()
     {
         displayCurrentCategory();
         displayCurrentValue();
         displayCurrentPlayer();
+        displayCurrentCard();
     }
 
     public void drawCard(FinalPlayer player)
@@ -672,6 +681,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button1.getName());
+                    last_card = button1.getIcon();
                 }
             }
         }
@@ -684,6 +694,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button2.getName());
+                    last_card = button2.getIcon();
                 }
             }
         }
@@ -696,6 +707,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button3.getName());
+                    last_card = button3.getIcon();
                 }
             }
         }
@@ -708,6 +720,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button4.getName());
+                    last_card = button4.getIcon();
                 }
             }
         }
@@ -720,6 +733,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button5.getName());
+                    last_card = button5.getIcon();
                 }
             }
         }
@@ -732,6 +746,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button6.getName());
+                    last_card = button6.getIcon();
                 }
             }
         }
@@ -744,6 +759,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button7.getName());
+                    last_card = button7.getIcon();
                 }
             }
         }
@@ -756,6 +772,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button8.getName());
+                    last_card = button8.getIcon();
                 }
             }
         }
@@ -768,6 +785,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button9.getName());
+                    last_card = button9.getIcon();
                 }
             }
         }
@@ -780,6 +798,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button10.getName());
+                    last_card = button10.getIcon();
                 }
             }
         }
@@ -792,6 +811,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button11.getName());
+                    last_card = button11.getIcon();
                 }
             }
         }
@@ -804,6 +824,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button12.getName());
+                    last_card = button12.getIcon();
                 }
             }
         }
@@ -816,6 +837,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button13.getName());
+                    last_card = button13.getIcon();
                 }
             }
         }
@@ -828,6 +850,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button14.getName());
+                    last_card = button14.getIcon();
                 }
             }
         }
@@ -840,6 +863,7 @@ public class FinalGame extends JFrame implements ActionListener
                 if (cardname == playerlist[who_turn].getHand().get(i).getName())
                 {
                     playCard(button15.getName());
+                    last_card = button15.getIcon();
                 }
             }
         }
