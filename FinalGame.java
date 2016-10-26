@@ -20,10 +20,12 @@ public class FinalGame extends JFrame implements ActionListener
     ArrayList<FinalCard> Deck;
     FinalPlayer[] playerlist, winnerlist;
     Random generator = new Random();
+    Font font = new Font("Arial", Font.BOLD, 24);
+    Font font2 = new Font("Arial", Font.PLAIN, 14);
 
     JPanel tophalf = new JPanel();
     JPanel currents = new JPanel();
-    JLabel turn_player = new JLabel("turn player");
+    JLabel turn_player = new JLabel("");
     JLabel displayed_category = new JLabel("no category yet");
     JLabel displayed_value = new JLabel("no value yet");
     JLabel messages = new JLabel("How many players are there?");
@@ -38,6 +40,7 @@ public class FinalGame extends JFrame implements ActionListener
     JPanel player_name_form = new JPanel();
 
     JPanel hand_form = new JPanel();
+    JPanel fhand_form = new JPanel();
     JButton pass = new JButton("pass");
     CardButton button1 = new CardButton();
     CardButton button2 = new CardButton();
@@ -55,6 +58,23 @@ public class FinalGame extends JFrame implements ActionListener
     CardButton button14 = new CardButton();
     CardButton button15 = new CardButton();
     ArrayList<CardButton> button_list = new ArrayList<CardButton>();
+
+    CardButton button011 = new CardButton();
+    CardButton button21 = new CardButton();
+    CardButton button31 = new CardButton();
+    CardButton button41 = new CardButton();
+    CardButton button51 = new CardButton();
+    CardButton button61 = new CardButton();
+    CardButton button71 = new CardButton();
+    CardButton button81 = new CardButton();
+    CardButton button91 = new CardButton();
+    CardButton button101 = new CardButton();
+    CardButton button111 = new CardButton();
+    CardButton button121 = new CardButton();
+    CardButton button131= new CardButton();
+    CardButton button141 = new CardButton();
+    CardButton button151 = new CardButton();
+    ArrayList<CardButton> fbutton_list = new ArrayList<CardButton>();
 
     JPanel new_trump_form = new JPanel();
     JButton hardness = new JButton("Hardness");
@@ -83,19 +103,24 @@ public class FinalGame extends JFrame implements ActionListener
         winner_number = 0;
 
         currents.setLayout(new GridLayout(8,1));
+        turn_player.setFont(font);
         currents.add(turn_player);
+        displayed_category.setFont(font2);
+        displayed_value.setFont(font2);
         currents.add(displayed_category);
         currents.add(displayed_value);
         messages.setHorizontalAlignment(SwingConstants.CENTER);
+        messages.setFont(font);
         currents.add(messages);
+        currents.setBackground(Color.GREEN);
         tophalf.setLayout(new GridLayout(1,2));
         tophalf.add(currents);
-        displayed_card.setIcon(specialTransformPic(last_card));
-        displayed_card.setPreferredSize(new Dimension(300,400));
+        last_card = specialTransformPic(last_card);
+        displayed_card.setIcon(last_card);
         displayed_card.setHorizontalAlignment(SwingConstants.CENTER);
         tophalf.add(displayed_card);
 
-        player_num_form.setLayout(new FlowLayout());
+        player_num_form.setLayout(new FlowLayout());                //creates the player number form
         three.addActionListener(this);
         four.addActionListener(this);
         five.addActionListener(this);
@@ -103,9 +128,9 @@ public class FinalGame extends JFrame implements ActionListener
         player_num_form.add(four);
         player_num_form.add(five);
 
-        player_name_form.setLayout(new FlowLayout());
+        player_name_form.setLayout(new FlowLayout());               //creates the name asker form
 
-        hand_form.setLayout(new GridLayout(2,7));
+        hand_form.setLayout(new GridLayout(2,7));                   //creates the hand form
         button_list.add(button1);
         button_list.add(button2);
         button_list.add(button3);
@@ -154,6 +179,38 @@ public class FinalGame extends JFrame implements ActionListener
         hand_form.add(button14);
         hand_form.add(button15);
 
+        fhand_form.setLayout(new GridLayout(2,7));              //creates the false hand form
+        fbutton_list.add(button011);
+        fbutton_list.add(button21);
+        fbutton_list.add(button31);
+        fbutton_list.add(button41);
+        fbutton_list.add(button51);
+        fbutton_list.add(button61);
+        fbutton_list.add(button71);
+        fbutton_list.add(button81);
+        fbutton_list.add(button91);
+        fbutton_list.add(button101);
+        fbutton_list.add(button111);
+        fbutton_list.add(button121);
+        fbutton_list.add(button131);
+        fbutton_list.add(button141);
+        fbutton_list.add(button151);
+        fhand_form.add(button1);
+        fhand_form.add(button2);
+        fhand_form.add(button3);
+        fhand_form.add(button4);
+        fhand_form.add(button5);
+        fhand_form.add(button6);
+        fhand_form.add(button7);
+        fhand_form.add(button8);
+        fhand_form.add(button9);
+        fhand_form.add(button10);
+        fhand_form.add(button11);
+        fhand_form.add(button12);
+        fhand_form.add(button13);
+        fhand_form.add(button14);
+        fhand_form.add(button15);
+
         new_trump_form.setLayout(new GridLayout(1,5));
         hardness.addActionListener(this);
         gravity.addActionListener(this);
@@ -165,9 +222,19 @@ public class FinalGame extends JFrame implements ActionListener
         new_trump_form.add(abundance);
         new_trump_form.add(cleavage);
         new_trump_form.add(value);
+        tophalf.setBackground(Color.GREEN);
         add(tophalf);
+        player_num_form.setBackground(Color.GREEN);
+        new_trump_form.setBackground(Color.GREEN);
+        hand_form.setBackground(Color.GREEN);
         bottomhalf.add(player_num_form);
+        bottomhalf.setBackground(Color.GREEN);
         add(bottomhalf);
+
+        winnerlist = new FinalPlayer[0];
+
+        validate();
+        repaint();
     }
 
     public ArrayList<FinalCard> initializeDeck()
@@ -234,7 +301,7 @@ public class FinalGame extends JFrame implements ActionListener
     }
 
     public void displayCurrentCategory() {
-        displayed_category.setText(current_category);
+        displayed_category.setText("The current category is: " + current_category);
         validate();
         repaint();
     }
@@ -378,8 +445,7 @@ public class FinalGame extends JFrame implements ActionListener
 
     public void displayCurrentCard()
     {
-        displayed_card = new JLabel();
-        displayed_card.setIcon(last_card);
+        displayed_card.setIcon(specialTransformPic(last_card));
     }
 
     public void displayCurrents()
@@ -388,6 +454,8 @@ public class FinalGame extends JFrame implements ActionListener
         displayCurrentValue();
         displayCurrentPlayer();
         displayCurrentCard();
+        validate();
+        repaint();
     }
 
     public void drawCard(FinalPlayer player)
@@ -410,6 +478,7 @@ public class FinalGame extends JFrame implements ActionListener
     {
         messages.setText("Which card do you want to play? You can also pass.");
         hand_form = new JPanel();
+        hand_form.setBackground(Color.GREEN);
         hand_form.setLayout(new GridLayout(2,8));
         pass.setVisible(true);
         hand_form.add(pass);
@@ -428,6 +497,30 @@ public class FinalGame extends JFrame implements ActionListener
             hand_form.add(button_list.get(i));
         }
         bottomhalf.add(hand_form);
+        validate();
+        repaint();
+    }
+
+    public void displayFalseHand(FinalPlayer player) {
+        fhand_form = new JPanel();
+        fhand_form.setBackground(Color.GREEN);
+        fhand_form.setLayout(new GridLayout(2, 8));
+        pass.setVisible(true);
+        ArrayList<FinalCard> hand = playerlist[who_turn].getHand();
+        for (int i = 0; i < hand.size(); ++i)                             //renaming buttons
+        {
+            fbutton_list.get(i).setVisible(true);
+            fbutton_list.get(i).renameButton(hand.get(i).getName());
+        }
+        for (int i = hand.size(); i < 15; ++i)                            //clearing buttons
+        {
+            fbutton_list.get(i).setVisible(false);
+        }
+        for (int i = 0; i < fbutton_list.size(); ++i)                      //adding buttons to hand form
+        {
+            fhand_form.add(fbutton_list.get(i));
+        }
+        bottomhalf.add(fhand_form);
         validate();
         repaint();
     }
@@ -456,10 +549,11 @@ public class FinalGame extends JFrame implements ActionListener
         return returnvalue;
     }
 
-    public void checkCombo()
+    public void checkCombo() //*
     {
-        if (getHandNames(playerlist[who_turn]).contains("magnetite") && getHandNames(playerlist[who_turn]).contains("the geophysicist")) {
-            System.out.println("Do you want to play Magnetite and The Geophysicist together to win? Yes or no.");
+        if (getHandNames(playerlist[who_turn]).contains("magnetite") && getHandNames(playerlist[who_turn]).contains("thegeophysicist"))
+        {
+            messages.setText("Do you want to play Magnetite and The Geophysicist together to win? Yes or no.");
             Scanner scanner = new Scanner(System.in);
             switch (scanner.next().toLowerCase()) {
                 case "yes":
@@ -480,27 +574,29 @@ public class FinalGame extends JFrame implements ActionListener
         ArrayList<FinalCard> hand = playerlist[who_turn].getHand();
         for (int i=0; i < hand.size(); ++i)
         {
-            if (hand.get(i).checkIfPlayable(current_category, current_value) == false)
+            if (hand.get(i).getName() == string)
             {
-                messages.setText("You can't play that card. It's " + current_category + " is too low.");
-                timer.start();
-            }
-            if (hand.get(i).checkIfPlayable(current_category, current_value) == true && hand.get(i).getName() == string)
-            {
-                if (hand.get(i).getName() == "TheGeologist")
+                if (hand.get(i).checkIfPlayable(current_category, current_value) == true)
                 {
-                    current_category = "hardness";
-                    System.out.println("still gotta fix the geologist bullshit");
+                    if (hand.get(i).getName() == "TheGeologist")
+                    {
+                        current_category = "hardness";
+                        System.out.println("still gotta fix the geologist bullshit");
+                    }
+                    else { current_category = hand.get(i).getNewCurrentCategory(current_category);}
+                    current_value = hand.get(i).getNewCurrentValue(current_category);
+                    last_card = new ImageIcon("/Users/Matt/Desktop/Australian School/" +
+                            "Programming Final/project_mineral_super_trumps_game-master/images/"+hand.get(i).getName()+".jpg");
+                    displayCurrents();
+                    hand.remove(i);
+                    validate();
+                    repaint();
+                    nextTurn();
                 }
-                else { current_category = hand.get(i).getNewCurrentCategory(current_category);}
-                current_value = hand.get(i).getNewCurrentValue(current_category);
-                last_card = new ImageIcon("/Users/Matt/Desktop/Australian School/" +
-                        "Programming Final/project_mineral_super_trumps_game-master/images/"+hand.get(i)+".jpg");
-                displayCurrents();
-                validate();
-                repaint();
-                hand.remove(i);
-                nextTurn();
+                else
+                {
+                    messages.setText("You can't play that card. Its " + current_category + " is too low!");
+                }
             }
         }
     }
@@ -514,8 +610,12 @@ public class FinalGame extends JFrame implements ActionListener
 
     public void checkForWin()
     {
-        if (playerlist[who_turn].getHand().size() == 0) {
-            playerWins();
+        if (playerlist[who_turn].getWinStatus() == false)
+        {
+            if (playerlist[who_turn].getHand().size() == 0)
+            {
+                playerWins();
+            }
         }
     }
 
@@ -531,14 +631,15 @@ public class FinalGame extends JFrame implements ActionListener
     {
         messages.setText(playerlist[who_turn].getName() + " wins!");
         playerlist[who_turn].changeWinStatus(true);
-        winnerlist[winner_number] = playerlist[who_turn];
+        FinalPlayer player = playerlist[who_turn];
+        System.out.println(winner_number);
+        winnerlist[winner_number] = player;
         winner_number++;
-        nextTurn();
+        timer.start();
     }
 
-    public void nextTurn()
+    public void specialNextTurn()
     {
-        checkForWin();
         checkFinish();
         ++who_turn;
         messages.setText("Which card do you want to play? You can also pass.");
@@ -546,11 +647,15 @@ public class FinalGame extends JFrame implements ActionListener
             who_turn = 0;
         }
         displayCurrents();
-        if (isSoloPLayer() == true)
+        if (isSoloPLayer() == false) {displayHand(playerlist[who_turn]);}
+        if (isSoloPLayer() == true && playerlist[who_turn].getWinStatus() == false)
         {
             bottomhalf.remove(hand_form);
             messages.setText("What should the new active trump be?");
             bottomhalf.add(new_trump_form);
+            displayFalseHand(playerlist[who_turn]);
+            validate();
+            repaint();
             for (int i=0; i < playerlist.length; ++i)
             {
                 playerlist[i].changePlayStatus(true);
@@ -559,16 +664,52 @@ public class FinalGame extends JFrame implements ActionListener
         if (playerlist[who_turn].canTheyPlay() == false || playerlist[who_turn].getWinStatus() == true) {
             nextTurn();
         }
-        displayHand(playerlist[who_turn]);
+        checkCombo();
+    }
+
+    public void nextTurn()
+    {
+        checkForWin();
+        checkFinish();
+        ++who_turn;
+        messages.setText("Which card do you want to play? You can also pass.");
+        if (who_turn >= playerlist.length)
+        {
+            who_turn = 0;
+        }
+        displayCurrents();
+        if (isSoloPLayer() == false)
+        {
+            displayHand(playerlist[who_turn]);
+        }
+        if (isSoloPLayer() == true)
+        {
+            bottomhalf.remove(hand_form);
+            messages.setText("What should the new active trump be?");
+            bottomhalf.add(new_trump_form);
+            displayFalseHand(playerlist[who_turn]);
+            validate();
+            repaint();
+            for (int i=0; i < playerlist.length; ++i)
+            {
+                playerlist[i].changePlayStatus(true);
+            }
+        }
+
+        if (playerlist[who_turn].canTheyPlay() == false || playerlist[who_turn].getWinStatus() == true)
+        {
+            nextTurn();
+        }
+        checkCombo();
     }
 
     public void endGame()
     {
         ArrayList finallist = new ArrayList();
-        String string = " ";
+        String string = "";
         for (int i = 0; i < winnerlist.length; ++i) {
             int place = i + 1;
-            string = " " + string + (winnerlist[i].getName() + " is number " + place + "!" + "\n");
+            string = string + (winnerlist[i].getName() + " is number " + place + "!" + "\n");
             finallist.add(winnerlist[i]);
         }
         for (int x = 0; x < playerlist.length; ++x) {
@@ -576,13 +717,15 @@ public class FinalGame extends JFrame implements ActionListener
                 string = string + (playerlist[x].getName() + " loses!");
             }
         }
-        messages.setText(string);
+        System.out.println(string);
+        System.out.println("THANK YOU FOR PLAYING!!!");
+        System.exit(0);
     }
 
     public ImageIcon specialTransformPic(ImageIcon i)
     {
         Image image = i.getImage();
-        Image new_image = image.getScaledInstance(240,400, Image.SCALE_SMOOTH);
+        Image new_image = image.getScaledInstance(240,300, Image.SCALE_SMOOTH);
         return (new ImageIcon(new_image));
     }
 
@@ -600,10 +743,12 @@ public class FinalGame extends JFrame implements ActionListener
             }
             who_turn = generator.nextInt(playernumber);     //decides first person at random
             playerlist = players;
-            winnerlist = new FinalPlayer[playernumber - 1];
+            winnerlist = new FinalPlayer[2];
             dealCards();
             messages.setText("What should the new active trump be?");
             bottomhalf.add(new_trump_form);
+            displayFalseHand(playerlist[who_turn]);
+            bottomhalf.add(fhand_form);
             validate();
             repaint();
         }
@@ -618,10 +763,12 @@ public class FinalGame extends JFrame implements ActionListener
             }
             who_turn = generator.nextInt(playernumber);     //decides first person at random
             playerlist = players;
-            winnerlist = new FinalPlayer[playernumber - 1];
+            winnerlist = new FinalPlayer[3];
             dealCards();
             messages.setText("What should the new active trump be?");
             bottomhalf.add(new_trump_form);
+            displayFalseHand(playerlist[who_turn]);
+            bottomhalf.add(fhand_form);
             validate();
             repaint();
         }
@@ -636,10 +783,12 @@ public class FinalGame extends JFrame implements ActionListener
             }
             who_turn = generator.nextInt(playernumber);     //decides first person at random
             playerlist = players;
-            winnerlist = new FinalPlayer[playernumber - 1];
+            winnerlist = new FinalPlayer[4];
             dealCards();
             messages.setText("What should the new active trump be?");
             bottomhalf.add(new_trump_form);
+            displayFalseHand(playerlist[who_turn]);
+            bottomhalf.add(fhand_form);
             validate();
             repaint();
         }
@@ -648,6 +797,7 @@ public class FinalGame extends JFrame implements ActionListener
         {
             current_category = "hardness";
             current_value = -1;
+            bottomhalf.remove(fhand_form);
             bottomhalf.remove(new_trump_form);
             displayCurrents();
             displayHand(playerlist[who_turn]);
@@ -656,6 +806,7 @@ public class FinalGame extends JFrame implements ActionListener
         {
             current_category = "economic value";
             current_value = -1;
+            bottomhalf.remove(fhand_form);
             bottomhalf.remove(new_trump_form);
             displayCurrents();
             displayHand(playerlist[who_turn]);
@@ -664,6 +815,7 @@ public class FinalGame extends JFrame implements ActionListener
         {
             current_category = "specific gravity";
             current_value = -1;
+            bottomhalf.remove(fhand_form);
             bottomhalf.remove(new_trump_form);
             displayCurrents();
             displayHand(playerlist[who_turn]);
@@ -672,6 +824,7 @@ public class FinalGame extends JFrame implements ActionListener
         {
             current_category = "crystal abundance";
             current_value = -1;
+            bottomhalf.remove(fhand_form);
             bottomhalf.remove(new_trump_form);
             displayCurrents();
             displayHand(playerlist[who_turn]);
@@ -680,6 +833,7 @@ public class FinalGame extends JFrame implements ActionListener
         {
             current_category = "cleavage";
             current_value = -1;
+            bottomhalf.remove(fhand_form);
             bottomhalf.remove(new_trump_form);
             displayCurrents();
             displayHand(playerlist[who_turn]);
@@ -874,7 +1028,7 @@ public class FinalGame extends JFrame implements ActionListener
 
         if (e.getSource() == timer)
         {
-            messages.setText("Which card do you want to play? You can also pass.");
+            specialNextTurn();
             timer.stop();
         }
     }

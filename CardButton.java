@@ -11,7 +11,7 @@ public class CardButton extends JButton
             "Programming Final/project_mineral_super_trumps_game-master/images/"+string+".jpg");
     JPanel panel = new JPanel();
     JLabel label = new JLabel();
-    Dimension size = new Dimension(120,180);
+    Dimension size = new Dimension(130,200);
 
     public CardButton()
     {
@@ -61,7 +61,7 @@ public class CardButton extends JButton
     public ImageIcon transformPic(ImageIcon i)
     {
         Image image = i.getImage();
-        Image new_image = image.getScaledInstance(120,180, Image.SCALE_SMOOTH);
+        Image new_image = image.getScaledInstance(130,200, Image.SCALE_SMOOTH);
         return (new ImageIcon(new_image));
     }
 }
