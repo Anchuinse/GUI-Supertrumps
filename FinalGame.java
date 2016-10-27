@@ -581,7 +581,6 @@ public class FinalGame extends JFrame implements ActionListener
                     if (hand.get(i).getName() == "TheGeologist")
                     {
                         current_category = "hardness";
-                        System.out.println("still gotta fix the geologist bullshit");
                     }
                     else { current_category = hand.get(i).getNewCurrentCategory(current_category);}
                     current_value = hand.get(i).getNewCurrentValue(current_category);
@@ -608,15 +607,16 @@ public class FinalGame extends JFrame implements ActionListener
         nextTurn();
     }
 
-    public void checkForWin()
+    public boolean checkForWin()
     {
         if (playerlist[who_turn].getWinStatus() == false)
         {
             if (playerlist[who_turn].getHand().size() == 0)
             {
-                playerWins();
+                return true;
             }
         }
+        return false;
     }
 
     public void checkFinish()
@@ -632,7 +632,6 @@ public class FinalGame extends JFrame implements ActionListener
         messages.setText(playerlist[who_turn].getName() + " wins!");
         playerlist[who_turn].changeWinStatus(true);
         FinalPlayer player = playerlist[who_turn];
-        System.out.println(winner_number);
         winnerlist[winner_number] = player;
         winner_number++;
         timer.start();
@@ -667,40 +666,39 @@ public class FinalGame extends JFrame implements ActionListener
         checkCombo();
     }
 
-    public void nextTurn()
-    {
-        checkForWin();
-        checkFinish();
-        ++who_turn;
-        messages.setText("Which card do you want to play? You can also pass.");
-        if (who_turn >= playerlist.length)
+    public void nextTurn() {
+        if (checkForWin() == true)
         {
-            who_turn = 0;
-        }
-        displayCurrents();
-        if (isSoloPLayer() == false)
-        {
-            displayHand(playerlist[who_turn]);
-        }
-        if (isSoloPLayer() == true)
-        {
-            bottomhalf.remove(hand_form);
-            messages.setText("What should the new active trump be?");
-            bottomhalf.add(new_trump_form);
-            displayFalseHand(playerlist[who_turn]);
-            validate();
-            repaint();
-            for (int i=0; i < playerlist.length; ++i)
+            playerWins();
+        } else
             {
-                playerlist[i].changePlayStatus(true);
+            checkFinish();
+            ++who_turn;
+            messages.setText("Which card do you want to play? You can also pass.");
+            if (who_turn >= playerlist.length) {
+                who_turn = 0;
             }
-        }
+            displayCurrents();
+            if (isSoloPLayer() == false) {
+                displayHand(playerlist[who_turn]);
+            }
+            if (isSoloPLayer() == true || playerlist[who_turn].getWinStatus() == false) {
+                bottomhalf.remove(hand_form);
+                messages.setText("What should the new active trump be?");
+                bottomhalf.add(new_trump_form);
+                displayFalseHand(playerlist[who_turn]);
+                validate();
+                repaint();
+                for (int i = 0; i < playerlist.length; ++i) {
+                    playerlist[i].changePlayStatus(true);
+                }
+            }
 
-        if (playerlist[who_turn].canTheyPlay() == false || playerlist[who_turn].getWinStatus() == true)
-        {
-            nextTurn();
+            if (playerlist[who_turn].canTheyPlay() == false || playerlist[who_turn].getWinStatus() == true) {
+                nextTurn();
+            }
+            checkCombo();
         }
-        checkCombo();
     }
 
     public void endGame()
@@ -749,6 +747,7 @@ public class FinalGame extends JFrame implements ActionListener
             bottomhalf.add(new_trump_form);
             displayFalseHand(playerlist[who_turn]);
             bottomhalf.add(fhand_form);
+            displayCurrents();
             validate();
             repaint();
         }
@@ -769,6 +768,7 @@ public class FinalGame extends JFrame implements ActionListener
             bottomhalf.add(new_trump_form);
             displayFalseHand(playerlist[who_turn]);
             bottomhalf.add(fhand_form);
+            displayCurrents();
             validate();
             repaint();
         }
@@ -789,6 +789,7 @@ public class FinalGame extends JFrame implements ActionListener
             bottomhalf.add(new_trump_form);
             displayFalseHand(playerlist[who_turn]);
             bottomhalf.add(fhand_form);
+            displayCurrents();
             validate();
             repaint();
         }
