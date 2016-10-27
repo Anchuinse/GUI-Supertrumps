@@ -682,7 +682,7 @@ public class FinalGame extends JFrame implements ActionListener
             if (isSoloPLayer() == false) {
                 displayHand(playerlist[who_turn]);
             }
-            if (isSoloPLayer() == true || playerlist[who_turn].getWinStatus() == false) {
+            if (isSoloPLayer() == true && playerlist[who_turn].getWinStatus() == false) {
                 bottomhalf.remove(hand_form);
                 messages.setText("What should the new active trump be?");
                 bottomhalf.add(new_trump_form);
